@@ -6,11 +6,11 @@ This project type involves a single repository with Laravel handling all server-
 
 ## Rules
 
-Reference the relevant rules file in `rules/` whenever working on matching files:
+Reference the relevant rules file in `.agents/standards/rules/` whenever working on matching files:
 
-- [rules/general.md](rules/general.md) — General code formatting and style patterns. Always reference for any code change.
-- [rules/php.md](rules/php.md) — PHP style rules. Reference when editing files matching `{app,bootstrap,config,database,routes,tests}/**/*.php`.
-- [rules/laravel.md](rules/laravel.md) — Laravel-specific patterns. Reference when editing files matching `{app,bootstrap,config,database,routes,tests}/**/*.php`.
+- [.agents/standards/rules/general.md](.agents/standards/rules/general.md) — General code formatting and style patterns. Always reference for any code change.
+- [.agents/standards/rules/php.md](.agents/standards/rules/php.md) — PHP style rules. Reference when editing files matching `{app,bootstrap,config,database,routes,tests}/**/*.php`.
+- [.agents/standards/rules/laravel.md](.agents/standards/rules/laravel.md) — Laravel-specific patterns. Reference when editing files matching `{app,bootstrap,config,database,routes,tests}/**/*.php`.
 
 ## Commands
 
@@ -40,7 +40,7 @@ composer tests-filter   # Run filtered side tests (append filter name)
 - `Models/` - Eloquent models with concerns for organization
 - `Concerns/` - Model traits organized by model name (Organization/, User/, Contact/, etc.)
 - `Requests/` - Form request validation classes organized by domain
-- `Rules/` - Custom validation rules
+- `.agents/standards/Rules/` - Custom validation rules
 - `Jobs/` - Queueable job classes
 - `Notifications/` - Notification classes for email/SMS
 - `Services/` - External service integrations
