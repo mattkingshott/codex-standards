@@ -13,7 +13,7 @@ set -euo pipefail
 # script, curl/bootstrap command, or a temporary clone of this standards repo.
 ##
 
-DEFAULT_REPO="git@github.com:mattkingshott/codex-standards.git"
+DEFAULT_REPO="https://github.com/mattkingshott/codex-standards.git"
 
 ##
 # Configuration.
@@ -48,34 +48,53 @@ if [ -z "$STANDARDS_REPO" ]; then
 fi
 
 ##
-# Append a single line to a file only when it is not already present.
+# Add a single line to a file only when it is not already present.
 #
-# This keeps repeated installer runs idempotent, which matters when the command
-# is used as a normal update mechanism.
+# The line is inserted with the file's other leading ignore entries, sorted
+# alphabetically. Any existing comments or later sections are kept below those
+# generated entries.
 ##
-append_once() {
+add_sorted_once() {
     local file="$1"
     local line="$2"
+    local rest_file
+    local tmp_file
 
     touch "$file"
 
-    if ! grep -qxF "$line" "$file"; then
-        if [ -s "$file" ] && [ -n "$(tail -c 1 "$file")" ]; then
-            printf '\n' >> "$file"
-        fi
-
-        printf "%s\n" "$line" >> "$file"
+    if grep -qxF "$line" "$file"; then
+        return
     fi
+
+    rest_file="$(mktemp)"
+    tmp_file="$(mktemp)"
+
+    grep -vxE '[.]agents/.*' "$file" > "$rest_file" || true
+
+    {
+        {
+            printf "%s\n" "$line"
+            grep -xE '[.]agents/.*' "$file" || true
+        } | awk 'NF && !seen[$0]++' | sort
+
+        if [ -s "$rest_file" ]; then
+            printf '\n'
+            cat "$rest_file"
+        fi
+    } > "$tmp_file"
+
+    mv "$tmp_file" "$file"
+    rm -f "$rest_file"
 }
 
 ##
-# Return true when the project AGENTS.md already references a standards stack.
+# Return true when the project AGENTS.md already contains the standards router.
 #
-# Stack selection should be a one-time project decision. Re-running the installer
-# should update standards, not repeatedly ask the same setup question.
+# Re-running the installer should update standards, not append duplicate router
+# instructions or repeatedly ask for the project stack.
 ##
 project_has_stack_reference() {
-    [ -f "$PROJECT_AGENTS_FILE" ] && grep -qF "$STANDARDS_DIR/stacks/" "$PROJECT_AGENTS_FILE"
+    [ -f "$PROJECT_AGENTS_FILE" ] && grep -qF "Before doing anything, read" "$PROJECT_AGENTS_FILE"
 }
 
 ##
@@ -110,7 +129,7 @@ EOF
 # the pulled standards repository itself.
 ##
 install_gitignore_entry() {
-    append_once ".gitignore" "$STANDARDS_DIR/"
+    add_sorted_once ".gitignore" "$STANDARDS_DIR/"
 }
 
 ##
@@ -157,7 +176,7 @@ EOF
             ln -s "../standards/skills/$skill_name" "$SKILLS_DIR/$skill_name"
         fi
 
-        append_once ".gitignore" "$SKILLS_DIR/$skill_name"
+        add_sorted_once ".gitignore" "$SKILLS_DIR/$skill_name"
     done
 }
 
@@ -249,52 +268,30 @@ EOF
 }
 
 ##
-# Add a managed router block to the consuming project's AGENTS.md.
+# Add a router sentence to the consuming project's AGENTS.md.
 #
-# This is not an include system. It simply tells Codex, in the project guidance
-# it already discovers, to read the standards guidance before doing project work.
-# When the project stack is known, it also records the matching stack file.
+# This is not an include system. It tells Codex, in the project guidance it
+# already discovers, to read the standards guidance and selected stack file
+# before doing project work.
 ##
 install_agents_router() {
-    local start_marker="<!-- agent-standards:start -->"
-    local end_marker="<!-- agent-standards:end -->"
-    local stack_line=""
-    local tmp_file
+    local read_targets="$STANDARDS_DIR/AGENTS.md"
 
     touch "$PROJECT_AGENTS_FILE"
 
-    if [ -n "${SELECTED_STACK_PATH:-}" ]; then
-        stack_line=" and \`$SELECTED_STACK_PATH\`."
+    if grep -qF "Before doing anything, read" "$PROJECT_AGENTS_FILE"; then
+        return
     fi
 
-    if grep -qF "$start_marker" "$PROJECT_AGENTS_FILE"; then
-        if [ -n "$stack_line" ]; then
-            tmp_file="$(mktemp)"
-            awk -v marker="$end_marker" -v line="$stack_line" '
-                $0 == marker {
-                    print ""
-                    print line
-                    print ""
-                }
-
-                { print }
-            ' "$PROJECT_AGENTS_FILE" > "$tmp_file"
-            mv "$tmp_file" "$PROJECT_AGENTS_FILE"
-        fi
-
-        return
+    if [ -n "${SELECTED_STACK_PATH:-}" ]; then
+        read_targets="$read_targets and $SELECTED_STACK_PATH"
     fi
 
     if [ -s "$PROJECT_AGENTS_FILE" ]; then
         printf '\n' >> "$PROJECT_AGENTS_FILE"
     fi
 
-    cat >> "$PROJECT_AGENTS_FILE" <<EOF
-$start_marker
-Before doing anything, read \`$STANDARDS_DIR/AGENTS.md\`.
-$(if [ -n "$stack_line" ]; then printf "$stack_line"; fi)
-$end_marker
-EOF
+    printf 'Before doing anything, read %s.\n' "$read_targets" >> "$PROJECT_AGENTS_FILE"
 }
 
 ##
