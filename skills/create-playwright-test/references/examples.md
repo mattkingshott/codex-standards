@@ -21,7 +21,7 @@ Use one `Test.` docblock per `test(...)` call.
  */
 test('a user can change their password', async({ createUser, page }) =>
 {
-    let user = createUser();
+    const user = createUser();
 
     await fake(page, 'PATCH', route('account.password'));
 
@@ -105,7 +105,7 @@ await page.waitFor({
 Multi-key body uses `payload`:
 
 ```js
-let payload = {
+const payload = {
     new_password              : 'R5p@4xFvw9w#',
     new_password_confirmation : 'R5p@4xFvw9w#',
     old_password              : 'Q5p@4xFvw9w#',
@@ -122,7 +122,7 @@ await page.waitFor({
 When the request object itself is needed, keep the return value:
 
 ```js
-let request = await page.waitFor({
+const request = await page.waitFor({
     method  : 'DELETE',
     url     : route('account.sessions.delete', { token : token.id }),
     trigger : async() => await menu(page, `session_${token.id}`, 'delete').link.click(),
@@ -138,7 +138,7 @@ Use factory fixtures from the test context (ensure overrides match the key order
 ```js
 test('a user can join an organization', async({ createInvitation, createUser, page }) =>
 {
-    let user = createUser({
+    const user = createUser({
         organization_id : null,
         role            : null,
         email           : 'associate@example.com',
@@ -151,7 +151,7 @@ Use `faker` from support when random values are needed:
 ```js
 import { faker, test } from '../../support/test.js';
 
-let token = faker.string.alphanumeric(64);
+const token = faker.string.alphanumeric(64);
 ```
 
 ## Selectors

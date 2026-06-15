@@ -4,9 +4,6 @@ All generated JavaScript code must match these patterns to ensure consistency an
 
 ---
 
-### Variable Declarations
-- Use `const`, never use `let`
-
 ### Formatting
 - Use 4 spaces for indenting, not 2
 

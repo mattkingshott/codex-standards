@@ -24,7 +24,7 @@ Use this skill when creating or updating Playwright tests in this repository.
 - Use `fake(page, method, route(...), body?, status?, headers?)` for mocked responses.
 - Use `page.waitFor({ method, url, body?, trigger })` for request assertions and triggering actions.
 - Use `button(page, id)`, `menu(page, id, link)`, and `findByDataId(page, id)` instead of repeated selector strings when possible.
-- Extract multi-key (3 or more) request bodies into `let payload = { ... }`; keep "1 key" and "2 key" bodies inline.
+- Extract multi-key (3 or more) request bodies into `const payload = { ... }`; keep "1 key" and "2 key" bodies inline.
 
 ## References
 
