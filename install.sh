@@ -60,7 +60,11 @@ append_once() {
     touch "$file"
 
     if ! grep -qxF "$line" "$file"; then
-        printf "\n%s\n" "$line" >> "$file"
+        if [ -s "$file" ] && [ -n "$(tail -c 1 "$file")" ]; then
+            printf '\n' >> "$file"
+        fi
+
+        printf "%s\n" "$line" >> "$file"
     fi
 }
 
