@@ -264,7 +264,7 @@ install_agents_router() {
     touch "$PROJECT_AGENTS_FILE"
 
     if [ -n "${SELECTED_STACK_PATH:-}" ]; then
-        stack_line="This project uses the \`$(basename "$SELECTED_STACK_PATH" .md)\` stack. Also read \`$SELECTED_STACK_PATH\`."
+        stack_line=" and \`$SELECTED_STACK_PATH\`."
     fi
 
     if grep -qF "$start_marker" "$PROJECT_AGENTS_FILE"; then
@@ -291,10 +291,8 @@ install_agents_router() {
 
     cat >> "$PROJECT_AGENTS_FILE" <<EOF
 $start_marker
-## Agent Standards
-
-Before doing project work, read \`$STANDARDS_DIR/AGENTS.md\`.
-$(if [ -n "$stack_line" ]; then printf '\n%s\n' "$stack_line"; fi)
+Before doing anything, read \`$STANDARDS_DIR/AGENTS.md\`.
+$(if [ -n "$stack_line" ]; then printf "$stack_line"; fi)
 $end_marker
 EOF
 }
