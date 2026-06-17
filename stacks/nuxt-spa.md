@@ -6,12 +6,12 @@ This project type involves a single repository with Nuxt handling all client-sid
 
 ## Rules
 
-Reference the relevant rules file in `.agents/standards/rules/` whenever working on matching files:
+Reference the relevant rules file in `.agents/foundation/rules/` whenever working on matching files:
 
-- [.agents/standards/rules/general.md](.agents/standards/rules/general.md) — General code formatting and style patterns. Always reference for any code change.
-- [.agents/standards/rules/tailwind.md](.agents/standards/rules/tailwind.md) — TailwindCSS rules. Reference when editing files matching `*.vue`.
-- [.agents/standards/rules/javascript.md](.agents/standards/rules/javascript.md) — JavaScript style rules (including Alpine.js within Blade). Reference when editing files matching `*.js` or `*.vue`.
-- [.agents/standards/rules/vue.md](.agents/standards/rules/vue.md) — Vue templating and script rules. Reference when editing files matching `*.vue`.
+- [.agents/foundation/rules/general.md](.agents/foundation/rules/general.md) — General code formatting and style patterns. Always reference for any code change.
+- [.agents/foundation/rules/tailwind.md](.agents/foundation/rules/tailwind.md) — TailwindCSS rules. Reference when editing files matching `*.vue`.
+- [.agents/foundation/rules/javascript.md](.agents/foundation/rules/javascript.md) — JavaScript style rules (including Alpine.js within Blade). Reference when editing files matching `*.js` or `*.vue`.
+- [.agents/foundation/rules/vue.md](.agents/foundation/rules/vue.md) — Vue templating and script rules. Reference when editing files matching `*.vue`.
 
 ## Commands
 

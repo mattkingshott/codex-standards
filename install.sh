@@ -343,7 +343,7 @@ install_agents_router
 cat <<EOF
 Agent foundation installed.
 
-Standards: $FOUNDATION_DIR
-Skills:    $SKILLS_DIR
-Router:    $PROJECT_AGENTS_FILE
+Foundation: $FOUNDATION_DIR
+Skills:     $SKILLS_DIR
+Router:     $PROJECT_AGENTS_FILE
 EOF
