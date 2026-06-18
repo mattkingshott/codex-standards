@@ -18,7 +18,7 @@ Use this skill when creating or updating Playwright tests in this repository.
 
 - Use multi-line docblocks for `Dependencies.` and `Test.`.
 - Keep each `test(...)` opening brace on its own line.
-- Use 4-space indentation, `let`, snake_case variables, and route helpers from `testing/support/test.js`.
+- Use route helpers from `testing/support/test.js`.
 - Organize each test in this order: setup data, fake/intercept network, then workflow.
 - In workflow, call `await start(page, user)` or `await start(page)` before browser navigation.
 - Use `fake(page, method, route(...), body?, status?, headers?)` for mocked responses.

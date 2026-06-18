@@ -46,8 +46,6 @@ npm run tests   # Run the test suite
 - Tailwind CSS v4
 - Vite
 
-## Technology
-
 ## Guidance
 
 - Do not create helper methods in test files, each test should encapsulate all required logic

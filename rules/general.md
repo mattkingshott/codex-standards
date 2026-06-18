@@ -7,6 +7,9 @@ All generated code **must match** these patterns to ensure consistency and maint
 ## Naming Conventions
 - Names: Single word preferred, maximum two words if absolutely necessary
 
+## Code formatting
+- Use 4-space indentation, never 2-space
+
 ## Code Organization
 - Use string interpolation over concatenation
 - When creating new methods, insert them so that all method names are in alphabetical order e.g. within a PHP class, a JavaScript class, a Vue component, etc. Do not reorder existing methods.

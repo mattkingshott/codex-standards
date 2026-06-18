@@ -85,4 +85,4 @@ After completing your work:
 
 ## Additional resources
 
-- For examples, see [examples.md](/references/examples.md)
+- For examples, see [examples.md](references/examples.md)
