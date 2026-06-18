@@ -4,7 +4,9 @@ All generated code **must match** these patterns to ensure consistency and maint
 
 ---
 
-## Naming Conventions
+## Conventions
+- Variables: Always use `snake_case`
+- Functions: Always use `camelCase`
 - Names: Single word preferred, maximum two words if absolutely necessary
 
 ## Code formatting
