@@ -38,8 +38,8 @@ private function renderAvatar(Model $model) : string
 }
 ```
 
-## Guidance
-- Do not wrap objects when instantiating e.g. `(new Process($event))->failed(null)`.
+## Important Guidance
+- Do not wrap objects when instantiating e.g. `(new Process($event))->failed(null)`. PHP no longer requires this.
 
 ## Language Features
 - String functions: Prefer multi-byte string functions over regular
