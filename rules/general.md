@@ -5,7 +5,7 @@ All generated code **must match** these patterns to ensure consistency and maint
 ---
 
 ## Conventions
-- Variables: Always use `snake_case`
+- Variables: Always use `camelCase`
 - Functions: Always use `camelCase`
 - Names: Single word preferred, maximum two words if absolutely necessary
 

@@ -67,6 +67,19 @@ When choosing between multiple valid implementations:
 
 Do not create new architectural styles when an established one already exists.
 
+## Minimality Ladder
+
+After understanding the task and tracing the real code path, choose the first rung that safely satisfies the requirement:
+
+1. Do not build it if the requirement is already covered or is speculative.
+2. Reuse an existing project helper, component, pattern, or API.
+3. Use the language standard library or framework feature.
+4. Use a native platform capability.
+5. Use an already-installed dependency when it is a natural fit.
+6. Write the smallest clear implementation that works.
+
+Do not climb this ladder before understanding the problem. A small change in the wrong layer is not simpler; it is a future bug with fewer lines.
+
 ## Phase 1: Simplify
 
 Review all unstaged changes and refactor them to the simplest implementation that appears to satisfy the requirements.
@@ -82,6 +95,15 @@ Prefer, in order:
 Actively remove unnecessary configuration, helpers, wrappers, traits, services, hooks, utilities, components, classes, speculative flexibility, premature optimization, duplication, and stale comments.
 
 Ask repeatedly: can this be implemented with fewer files, fewer concepts, fewer lines, or fewer moving parts? If yes, simplify it, but only to a point where it still remains interpretable to developers - extreme minimalism that is indecipherable is not a win.
+
+Do not treat shorter code as automatically better. Avoid:
+
+- Clever one-liners that hide control flow or make debugging harder.
+- Replacing readable domain code with dense generic code.
+- Local patches that leave the same bug in sibling callers.
+- New dependencies, abstractions, or configuration for convenience only.
+
+When a simplification has a known ceiling, document the tradeoff briefly in normal project style. Examples include an intentionally linear scan, a deliberately local-only cache, or a heuristic that may need to become a proper parser later.
 
 ## Phase 2: Validate
 
@@ -102,7 +124,11 @@ Look for:
 - Security concerns
 - Performance regressions introduced by the refactor
 
+For bug fixes, identify the root cause before changing code. Search every caller or entry point related to the function, component, route, command, hook, or API being touched. Prefer one correct fix at the shared source of behavior over scattered guards at individual call sites.
+
 Run the narrowest relevant verification commands available in the repo. Prefer existing test, lint, typecheck, or formatter scripts over inventing new checks. If the correct command is unclear, inspect package or project scripts before choosing.
+
+For non-trivial logic, leave behind the smallest durable check that would fail if the behavior regresses. This can be a focused unit test, existing test extension, or small self-check if that is the local convention. Trivial mechanical removals or obvious one-line changes do not need new tests.
 
 ## Phase 3: Repair
 

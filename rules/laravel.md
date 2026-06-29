@@ -4,6 +4,11 @@ All generated Laravel code must match these patterns to ensure consistency and m
 
 ---
 
+### General Rules
+
+- Write all code as though it belongs in an official first-party Laravel package. Prioritize readability, elegance, expressive APIs, consistency, and pragmatic simplicity
+- Prefer Laravel conventions over cleverness, favour composition over unnecessary abstraction, and write code that would feel natural alongside the Laravel framework itself
+
 ### Prohibited Patterns
 - Never create multi-purpose actions (one action = one operation)
 - Never use raw `Carbon::now()` or `now()` (use `Clock` facade)

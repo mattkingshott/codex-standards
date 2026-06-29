@@ -5,7 +5,8 @@ All generated Vue code must match these patterns to ensure consistency and maint
 ---
 
 ## General
-- Always use the Options API, never use Composition API
+- When creating new files and components, always use the Composition API.
+- When changing existing files, adopt the API currently in use e.g. Options.
 
 ## Properties & Attributes
 - Use full vue syntax e.g. `v-bind:class` not `:class`
